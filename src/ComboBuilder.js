@@ -1,16 +1,13 @@
 import './ComboBuilder.css'
 import { useState } from 'react'
 
-const COMBOS = [...require('./combos.json')]
-const CHARS = [...new Set(COMBOS.map(combo => combo.character))]
-const MODS_RE = /^\w+ (?=\w)/
-const MOVES_RE = /(^|[,>~])[^,>~]+/g
-
-COMBOS.forEach(combo => {
-	const modifier = combo.notation.match(MODS_RE)
-	combo['modifier'] = (modifier) ? modifier[0] : ''
-	combo.notation = combo.notation.replace(combo.modifier, '').match(MOVES_RE)
-})
+const MOVES = require('./moves.json')
+const CHARS = Object.keys(MOVES)
+const MODS = [
+	'Counter-Hit', 
+	'Punish Counter', 
+	'Blocked',
+]
 
 export default function ComboBuilder() {
 	const [userCombo, setUserCombo] = useState([])
@@ -18,43 +15,49 @@ export default function ComboBuilder() {
 
 	function updateUserCombo(e) {
 		let updatedCombo = [...userCombo]
-		let moveIndex = parseInt(e.target.id)
-		let move = e.target.value
+		const moveIndex = parseInt(e.target.id)
+		const input = e.target.value
 
-		if (userCombo.length > moveIndex) {
-			updatedCombo[moveIndex] = move
+		if (input === '') {
+				updatedCombo = updatedCombo.slice(0, moveIndex)
 		}
 		else {
-			updatedCombo.push(move)
+			const move = structuredClone(MOVES[userChar].filter(move => move.input === input)[0])
+			move['distance'] = getPrevDistance(moveIndex) + move.push
+	
+			if (userCombo.length > moveIndex) {
+				updatedCombo[moveIndex] = move
+			}
+			else {
+				updatedCombo.push(move)
+			}
+			updatedCombo = updatedCombo.slice(0, moveIndex + 1)
 		}
-		updatedCombo = updatedCombo.slice(0, moveIndex+1).filter(c => c)
 		setUserCombo(updatedCombo)
 
 		try {
-			document.getElementById(moveIndex+1).value = ''
+			document.getElementById(moveIndex + 1).value = ''
 		}
 		catch {}
 	}
 
-	function getPossibleCombos(combos, index) {
-		return combos.filter(combo => {
-			if (!userCombo.length) {
-				return true
-			}
-			if (combo.character !== userChar) {
-				return false
-			}
-			for (let i = 0; i <= index; i++) {
-				if (combo.notation[i] !== userCombo[i]) {
-					return false
-				}
-			}
-			return true
-		})
+	function getPrevDistance(moveIndex) {
+		if (moveIndex === 0) {
+			return 0
+		}
+		return userCombo[moveIndex - 1].distance
 	}
 
-	function getNextMoves(combos, index) {
-		if (combos.length === 1 && index === combos[0].notation.length) {
+	function getPossibleMoves(index) {
+		let possible_moves = MOVES[userChar]
+
+		if (index > 0) {
+			const prev_move = userCombo[index-1]
+			possible_moves = possible_moves.filter(move => {
+				return move.startup <= prev_move.advantage && move.range >= prev_move.distance
+			})
+		}
+		if (possible_moves.length === 0) {
 			return
 		}
 		return (
@@ -64,9 +67,8 @@ export default function ComboBuilder() {
 					onChange={updateUserCombo}
 					defaultValue={''}>
 					<option value=''>Choose a move</option>
-					{[...new Set(combos.map(combo =>
-							combo.notation[index]))].sort().map(move => (
-						<option value={move}>{move}</option>
+					{possible_moves.map(move => (
+						<option value={move.input}>{move.input}</option>
 					))}
 				</select>
 			</div>
@@ -83,10 +85,10 @@ export default function ComboBuilder() {
 				</select>
 			</div>
 			<div className='combo-table'>
-				{getNextMoves(COMBOS.filter(c => c.character === userChar), 0)}
-				{[...userCombo.keys()].map(i => getNextMoves(getPossibleCombos(COMBOS, i), i+1))}
+				{getPossibleMoves(0)}
+				{[...userCombo.keys()].map(i => getPossibleMoves(i + 1))}
 				<div>
-					{userCombo}
+					{userCombo.map(move => move.input+' ')}
 				</div>
 			</div>
 		</div>

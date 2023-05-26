@@ -1,0 +1,40 @@
+{
+  "Ryu": [
+    {
+      "input": "5LP",
+      "type": "chain",
+      "damage": 300,
+      "cancels": ["chain", "special", "super"],
+      "startup": 4,
+      "active": 3,
+      "recovery": 7,
+      "advantage": 4,
+      "range": 7,
+      "push": 3
+    },
+    {
+      "input": "5MP",
+      "type": "normal",
+      "damage": 600,
+      "cancels": ["special", "super", "target"],
+      "startup": 6,
+      "active": 4,
+      "recovery": 11,
+      "advantage": 7,
+      "range": 7,
+      "push": 5
+    },
+    {
+      "input": "5HP",
+      "type": "normal",
+      "damage": 800,
+      "cancels": ["special", "super", "target"],
+      "startup": 10,
+      "active": 5,
+      "recovery": 18,
+      "advantage": 3,
+      "range": 12.5,
+      "push": 6
+    }
+  ]
+}
