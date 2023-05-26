@@ -3,11 +3,13 @@ import { useState } from 'react'
 
 const COMBOS = [...require('./combos.json')]
 const CHARS = [...new Set(COMBOS.map(combo => combo.character))]
-const MODIFIERS = new RegExp('CH|PC|AA|Block|CU')
+const MODS_RE = /^\w+ (?=\w)/
+const MOVES_RE = /(^|[,>~])[^,>~]+/g
 
 COMBOS.forEach(combo => {
-	combo.notation = combo.notation.split(/([,>~ ])/).map(s => s.trim()).filter(s => s)
-	combo['modifier'] = (MODIFIERS.test(combo.notation[0])) ? combo.notation.shift() : ''
+	const modifier = combo.notation.match(MODS_RE)
+	combo['modifier'] = (modifier) ? modifier[0] : ''
+	combo.notation = combo.notation.replace(combo.modifier, '').match(MOVES_RE)
 })
 
 export default function ComboBuilder() {
@@ -57,14 +59,14 @@ export default function ComboBuilder() {
 		}
 		return (
 			<div className='move-row'>
-				<select 
+				<select
 					id={index}
 					onChange={updateUserCombo}
 					defaultValue={''}>
 					<option value=''>Choose a move</option>
-					{[...new Set(combos.map(combo => 
+					{[...new Set(combos.map(combo =>
 							combo.notation[index]))].sort().map(move => (
-						<option>{move}</option>
+						<option value={move}>{move}</option>
 					))}
 				</select>
 			</div>
@@ -84,7 +86,7 @@ export default function ComboBuilder() {
 				{getNextMoves(COMBOS.filter(c => c.character === userChar), 0)}
 				{[...userCombo.keys()].map(i => getNextMoves(getPossibleCombos(COMBOS, i), i+1))}
 				<div>
-					{userCombo.map(move => move+' ')}
+					{userCombo}
 				</div>
 			</div>
 		</div>
