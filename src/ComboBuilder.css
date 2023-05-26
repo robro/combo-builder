@@ -1,0 +1,46 @@
+:root {
+  --main-bg-color: black;
+  --main-text-color: lightgray;
+  --main-accent-color: #1a35ce;
+  --alt-accent-color: #0b26c0;
+  --dark-accent-color: #2b2b2b;
+  --darker-accent-color: #1a1a1a;
+  --link-color: #3760d1;
+
+  --max-width: 1200px;
+  --clickable-height: 36px;
+  --title-bar-height: 70px;
+
+  --number-of-props: 9;
+  --notation-width: 28%
+}
+
+body {
+  background-color: black;
+  color: lightgray;
+}
+
+select {
+  background-color: var(--dark-accent-color);
+  /* text-transform: capitalize; */
+  color: inherit;
+  font-size: 11pt;
+  height: var(--clickable-height);
+  border: 1px solid var(--dark-accent-color);
+  border-style: solid;
+  outline-style: none;
+  border-radius: 5px;
+  padding: 0 5px;
+}
+
+.top-bar {
+  padding: 20px;
+}
+
+.combo-table {
+  padding: 20px;
+}
+
+.move-row {
+  padding: 10px 0;
+}
