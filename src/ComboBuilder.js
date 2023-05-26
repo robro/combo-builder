@@ -27,6 +27,11 @@ export default function ComboBuilder() {
 		}
 		updatedCombo = updatedCombo.slice(0, moveIndex+1).filter(c => c)
 		setUserCombo(updatedCombo)
+
+		try {
+			document.getElementById(moveIndex+1).value = ''
+		}
+		catch {}
 	}
 
 	function getPossibleCombos(combos, index) {
@@ -47,6 +52,9 @@ export default function ComboBuilder() {
 	}
 
 	function getNextMoves(combos, index) {
+		if (combos.length === 1 && index === combos[0].notation.length) {
+			return
+		}
 		return (
 			<div className='move-row'>
 				<select 
@@ -54,7 +62,8 @@ export default function ComboBuilder() {
 					onChange={updateUserCombo}
 					defaultValue={''}>
 					<option value=''>Choose a move</option>
-					{[...new Set(combos.map(combo => combo.notation[index]))].sort().map(move => (
+					{[...new Set(combos.map(combo => 
+							combo.notation[index]))].sort().map(move => (
 						<option>{move}</option>
 					))}
 				</select>
@@ -73,7 +82,7 @@ export default function ComboBuilder() {
 			</div>
 			<div className='combo-table'>
 				{getNextMoves(COMBOS.filter(c => c.character === userChar), 0)}
-				{[...Array(userCombo.length).keys()].map(i => getNextMoves(getPossibleCombos(COMBOS, i), i+1))}
+				{[...userCombo.keys()].map(i => getNextMoves(getPossibleCombos(COMBOS, i), i+1))}
 				<div>
 					{userCombo.map(move => move+' ')}
 				</div>
