@@ -14,24 +14,14 @@ export default function ComboBuilder() {
 	const [userChar, setUserChar] = useState(CHARS[0])
 
 	function updateUserCombo(e) {
-		let updatedCombo = [...userCombo]
 		const moveIndex = parseInt(e.target.id)
 		const input = e.target.value
+		const updatedCombo = userCombo.slice(0, moveIndex)
 
-		if (input === '') {
-				updatedCombo = updatedCombo.slice(0, moveIndex)
-		}
-		else {
+		if (input !== '') {
 			const move = structuredClone(MOVES[userChar].filter(move => move.input === input)[0])
 			move['distance'] = getPrevDistance(moveIndex) + move.push
-	
-			if (userCombo.length > moveIndex) {
-				updatedCombo[moveIndex] = move
-			}
-			else {
-				updatedCombo.push(move)
-			}
-			updatedCombo = updatedCombo.slice(0, moveIndex + 1)
+			updatedCombo.push(move)
 		}
 		setUserCombo(updatedCombo)
 
@@ -53,9 +43,9 @@ export default function ComboBuilder() {
 
 		if (index > 0) {
 			const prev_move = userCombo[index-1]
-			possible_moves = possible_moves.filter(move => {
-				return move.startup <= prev_move.advantage && move.range >= prev_move.distance
-			})
+			possible_moves = possible_moves.filter(move => 
+				move.startup <= prev_move.advantage && move.range >= prev_move.distance
+			)
 		}
 		if (possible_moves.length === 0) {
 			return
