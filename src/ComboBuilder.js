@@ -27,14 +27,11 @@ export default function ComboBuilder() {
 
 		try {
 			document.getElementById(moveIndex + 1).value = ''
-		}
-		catch {}
+		} catch {}
 	}
 
 	function getPrevDistance(moveIndex) {
-		if (moveIndex === 0) {
-			return 0
-		}
+		if (moveIndex === 0) return 0
 		return userCombo[moveIndex - 1].distance
 	}
 
@@ -47,9 +44,8 @@ export default function ComboBuilder() {
 				move.startup <= prev_move.advantage && move.range >= prev_move.distance
 			)
 		}
-		if (possible_moves.length === 0) {
-			return
-		}
+		if (possible_moves.length === 0) return
+		
 		return (
 			<div className='move-row'>
 				<select
