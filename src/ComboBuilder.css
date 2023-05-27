@@ -31,10 +31,16 @@ select {
   outline-style: none;
   border-radius: 5px;
   padding: 0 5px;
+  min-width: 100px;
 }
 
 td {
   padding: 0 10px 0 0;
+}
+
+.combo-builder {
+  margin: auto;
+  max-width: var(--max-width);
 }
 
 .top-bar {
@@ -47,4 +53,8 @@ td {
 
 .move-row {
   padding: 10px 0;
+}
+
+.next-move {
+  width: 200px;
 }

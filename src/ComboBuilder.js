@@ -72,6 +72,7 @@ export default function ComboBuilder() {
 		return (
 			<div className='move-row'>
 				<select
+					className='next-move'
 					id={index}
 					onChange={updateUserCombo}>
 					<option value=''>Choose a move</option>
@@ -139,7 +140,7 @@ export default function ComboBuilder() {
 					getNextMoves(getPossibleCombos(filtered_combos, i), i + 1))}
 				<div>
 					{getPossibleCombos(filtered_combos, userCombo.length - 1).map(combo => (
-						<div>{`${combo.modifier} ${combo.counter} ${combo.notation.join(' ')}`}</div>
+						<div>{`${combo.modifier} ${combo.counter} ${combo.notation.join('')}`}</div>
 					))}
 				</div>
 			</div>
