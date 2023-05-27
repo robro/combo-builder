@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/combo-builder/static/css/main.c33080c6.css",
+    "main.js": "/combo-builder/static/js/main.62e730c3.js",
+    "static/js/787.abda6f85.chunk.js": "/combo-builder/static/js/787.abda6f85.chunk.js",
+    "index.html": "/combo-builder/index.html",
+    "main.c33080c6.css.map": "/combo-builder/static/css/main.c33080c6.css.map",
+    "main.62e730c3.js.map": "/combo-builder/static/js/main.62e730c3.js.map",
+    "787.abda6f85.chunk.js.map": "/combo-builder/static/js/787.abda6f85.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c33080c6.css",
+    "static/js/main.62e730c3.js"
+  ]
+}
