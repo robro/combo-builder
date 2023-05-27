@@ -26,6 +26,7 @@ export default function ComboBuilder() {
 	const [userChar, setUserChar] = useState(CHARS[0])
 	const [userCounter, setUserCounter] = useState('')
 	const [userModifier, setUserModifier] = useState('')
+	const [dropIndexes, setDropIndexes] = useState([])
 
 	const filtered_combos = COMBOS.filter(combo => {
 		let filtered = true
@@ -35,23 +36,24 @@ export default function ComboBuilder() {
 		return filtered
 	})
 
+	console.log(userCombo)
+	console.log(dropIndexes)
+
 	function updateUserCombo(e) {
-		let updatedCombo = [...userCombo]
 		let moveIndex = parseInt(e.target.id)
-		let move = e.target.value
+		let moves = e.target.value.split('/')
+		let updatedCombo = [...userCombo].slice(0, moveIndex)
+		let updatedIndexes = [...dropIndexes].slice(0, moveIndex)
+		
+		if (moves[0] !== '') {
+			updatedCombo = updatedCombo.concat(moves)
+			updatedIndexes.push(moveIndex + moves.length)
+		}
 
-		if (userCombo.length > moveIndex) {
-			updatedCombo[moveIndex] = move
-		}
-		else {
-			updatedCombo.push(move)
-		}
-		updatedCombo = updatedCombo.slice(0, moveIndex+1).filter(c => c)
 		setUserCombo(updatedCombo)
+		setDropIndexes(updatedIndexes)
 
-		try {
-			document.getElementById(moveIndex+1).value = ''
-		}
+		try { document.getElementById(moveIndex+1).value = '' }
 		catch {}
 	}
 
@@ -66,41 +68,57 @@ export default function ComboBuilder() {
 	}
 
 	function getNextMoves(combos, index) {
-		if (combos.length === 1) {
-			return
-		}
+		if (combos.length <= 1) return
 		return (
 			<div className='move-row'>
 				<select
 					className='next-move'
 					id={index}
 					onChange={updateUserCombo}>
-					<option value=''>Choose a move</option>
-					{[...new Set(combos.map(combo =>
-							combo.notation[index]))].sort().map(option => (
-						<option value={option}>{option.replace(', ', '')}</option>
+					<option value=''>Select a move</option>
+					{getNextMove(combos, index).map(option => (
+						<option value={option.join('/')}>{option.join(' ')}</option>
 					))}
 				</select>
 			</div>
 		)
 	}
 
+	function getNextMove(combos, index) {
+		let options = []
+		let move_count = 1
+
+		while (options.length < 2 || move_count > 10) {
+			options = Array.from(new Set(combos.map(combo =>
+				combo.notation.slice(index, index + move_count)
+			).map(JSON.stringify)), JSON.parse)
+			move_count++
+		}
+		return options
+	}
+
 	function onCharacterChange(e) {
 		setUserCombo([])
+		setDropIndexes([])
 		setUserChar(e.target.value)
-		document.getElementById(0).value = ''
+		try { document.getElementById(0).value = '' }
+		catch {}
 	}
 
 	function onModChange(e) {
 		setUserCombo([])
+		setDropIndexes([])
 		setUserModifier(e.target.value)
-		document.getElementById(0).value = ''
+		try { document.getElementById(0).value = '' }
+		catch {}
 	}
 
 	function onCounterChange(e) {
 		setUserCombo([])
+		setDropIndexes([])
 		setUserCounter(e.target.value)
-		document.getElementById(0).value = ''
+		try { document.getElementById(0).value = '' }
+		catch {}
 	}
 
 	return (
@@ -136,11 +154,12 @@ export default function ComboBuilder() {
 			</table>
 			<div className='combo-table'>
 				{getNextMoves(filtered_combos, 0)}
-				{[...userCombo.keys()].map(i => 
-					getNextMoves(getPossibleCombos(filtered_combos, i), i + 1))}
+				{dropIndexes.map(i => getNextMoves(getPossibleCombos(filtered_combos, i-1), i))}
 				<div>
-					{getPossibleCombos(filtered_combos, userCombo.length - 1).map(combo => (
-						<div>{`${combo.modifier} ${combo.counter} ${combo.notation.join('')}`}</div>
+					{getPossibleCombos(filtered_combos, userCombo.length-1).map(combo => (
+						<div>
+							{`${combo.modifier} ${combo.counter} ${combo.notation.join('')}`}
+						</div>
 					))}
 				</div>
 			</div>
