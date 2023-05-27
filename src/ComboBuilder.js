@@ -77,7 +77,7 @@ export default function ComboBuilder() {
 					onChange={updateUserCombo}>
 					<option value=''>Select a move</option>
 					{getNextMove(combos, index).map(option => (
-						<option value={option.join('/')}>{option.join(' ')}</option>
+						<option value={option.join('/')}>{option.join('').replace(', ', '')}</option>
 					))}
 				</select>
 			</div>
