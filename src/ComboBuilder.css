@@ -7,7 +7,7 @@
   --darker-accent-color: #1a1a1a;
   --link-color: #3760d1;
 
-  --max-width: 1200px;
+  --max-width: 800px;
   --clickable-height: 36px;
   --title-bar-height: 70px;
 
@@ -34,6 +34,10 @@ select {
   min-width: 100px;
 }
 
+select:focus {
+  border-color: var(--main-accent-color);
+}
+
 td {
   padding: 0 10px 0 0;
 }
@@ -57,4 +61,8 @@ td {
 
 .next-move {
   width: 200px;
+}
+
+.active {
+  background-color: var(--main-accent-color);
 }

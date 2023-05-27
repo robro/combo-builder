@@ -145,18 +145,6 @@
   },
   {
     "character": "Ryu",
-    "notation": "AA j.MP > j.214K, 623HP",
-    "startup": 8,
-    "drive": 0.0,
-    "super": 0,
-    "carry": 15,
-    "damage": 2720,
-    "advantage": 33,
-    "position": "Corner",
-    "state": "none"
-  },
-  {
-    "character": "Ryu",
     "notation": "j.HP, 4HP > 236HK, 623LP",
     "startup": 9,
     "drive": 0.0,

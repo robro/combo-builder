@@ -36,8 +36,8 @@ export default function ComboBuilder() {
 		return filtered
 	})
 
-	console.log(userCombo)
-	console.log(dropIndexes)
+	// console.log(userCombo)
+	// console.log(dropIndexes)
 
 	function updateUserCombo(e) {
 		let moveIndex = parseInt(e.target.id)
@@ -75,16 +75,18 @@ export default function ComboBuilder() {
 					className='next-move'
 					id={index}
 					onChange={updateUserCombo}>
-					<option value=''>Select a move</option>
-					{getNextMove(combos, index).map(option => (
-						<option value={option.join('/')}>{option.join('').replace(/^, /, '')}</option>
+					<option value=''>Select next move(s)</option>
+					{getOptions(combos, index).map(option => (
+						<option value={option.join('/')}>
+							{option.join('').replace(/^, /, '')}
+						</option>
 					))}
 				</select>
 			</div>
 		)
 	}
 
-	function getNextMove(combos, index) {
+	function getOptions(combos, index) {
 		let options = []
 		let move_count = 1
 
@@ -134,7 +136,10 @@ export default function ComboBuilder() {
 							</select>
 						</td>
 						<td>
-							<select onChange={onCounterChange}>
+							<select
+								// className={'active'}
+								className={(userCounter) ? 'active' : ''}
+								onChange={onCounterChange}>
 								<option value=''>No Counter</option>
 								{Object.keys(CTRS).map(ctr => (
 									<option value={ctr}>{CTRS[ctr]}</option>
@@ -142,7 +147,9 @@ export default function ComboBuilder() {
 							</select>
 						</td>
 						<td>
-							<select onChange={onModChange}>
+							<select
+								className={(userModifier) ? 'active': ''}
+								onChange={onModChange}>
 								<option value=''>No Modifier</option>
 								{Object.keys(MODS).map(mod => (
 									<option value={mod}>{MODS[mod]}</option>
@@ -156,11 +163,11 @@ export default function ComboBuilder() {
 				{getNextMoves(filtered_combos, 0)}
 				{dropIndexes.map(i => getNextMoves(getPossibleCombos(filtered_combos, i-1), i))}
 				<div>
-					{getPossibleCombos(filtered_combos, userCombo.length-1).map(combo => (
+					{(filtered_combos.length > 0) ? getPossibleCombos(filtered_combos, userCombo.length-1).map(combo => (
 						<div>
 							{`${combo.modifier} ${combo.counter} ${combo.notation.join('')}`}
 						</div>
-					))}
+					)) : 'No combos found'}
 				</div>
 			</div>
 		</div>
