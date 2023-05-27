@@ -33,6 +33,10 @@ select {
   padding: 0 5px;
 }
 
+td {
+  padding: 0 10px 0 0;
+}
+
 .top-bar {
   padding: 20px;
 }
