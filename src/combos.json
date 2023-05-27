@@ -97,7 +97,7 @@
   },
   {
     "character": "Ryu",
-    "notation": "Block DI, 2HP > 214MP, 623HP",
+    "notation": "OB DI, 2HP > 214MP, 623HP",
     "startup": 26,
     "drive": 1.0,
     "super": 0,
@@ -229,18 +229,6 @@
   },
   {
     "character": "Ryu",
-    "notation": "5HK, 2MK > 214HK",
-    "startup": 12,
-    "drive": 0.0,
-    "super": 0,
-    "carry": 14,
-    "damage": 2200,
-    "advantage": 20,
-    "position": "Anywhere",
-    "state": "none"
-  },
-  {
-    "character": "Ryu",
     "notation": "5MP, 5MP > DR~5HK, 5HP > DR~2HP > 214HP, 236236P",
     "startup": 6,
     "drive": 6.0,
@@ -253,7 +241,7 @@
   },
   {
     "character": "Ryu",
-    "notation": "Block DI, Dash, 2HP > 214P, j.MP > j.214KK, 236236K",
+    "notation": "OB DI, Dash, 2HP > 214P, j.MP > j.214KK, 236236K",
     "startup": 26,
     "drive": 3.0,
     "super": 3,
@@ -649,7 +637,7 @@
   },
   {
     "character": "Ryu",
-    "notation": "CU j.MK, 5MP, 4HP > 236HK",
+    "notation": "CR j.MK, 5MP, 4HP > 236HK",
     "startup": 7,
     "drive": 0.0,
     "super": 0,
@@ -661,7 +649,7 @@
   },
   {
     "character": "Ryu",
-    "notation": "CU j.MK, 5MP, 4HP > 214HK",
+    "notation": "CR j.MK, 5MP, 4HP > 214HK",
     "startup": 7,
     "drive": 0.0,
     "super": 0,
@@ -673,7 +661,7 @@
   },
   {
     "character": "Ryu",
-    "notation": "CU j.MK, 5MP, 4HP > 236KK, 4HK > 623HP",
+    "notation": "CR j.MK, 5MP, 4HP > 236KK, 4HK > 623HP",
     "startup": 7,
     "drive": 2.0,
     "super": 0,
@@ -685,7 +673,7 @@
   },
   {
     "character": "Ryu",
-    "notation": "CU j.MK, 5MP, 4HP > 236KK, DR~5MP > 236LP, 236236P",
+    "notation": "CR j.MK, 5MP, 4HP > 236KK, DR~5MP > 236LP, 236236P",
     "startup": 7,
     "drive": 3.0,
     "super": 1,
@@ -697,7 +685,7 @@
   },
   {
     "character": "Ryu",
-    "notation": "CU j.MK, 5MP, 4HP > 236KK > 214214[P] Lv.2",
+    "notation": "CR j.MK, 5MP, 4HP > 236KK > 214214[P] Lv.2",
     "startup": 7,
     "drive": 2.0,
     "super": 2,
@@ -709,7 +697,7 @@
   },
   {
     "character": "Ryu",
-    "notation": "CU j.MK, 5MP, 4HP > 236KK, DR~5HP > 236MK > 236236K",
+    "notation": "CR j.MK, 5MP, 4HP > 236KK, DR~5HP > 236MK > 236236K",
     "startup": 7,
     "drive": 3.0,
     "super": 3,
@@ -913,7 +901,7 @@
   },
   {
     "character": "Ryu",
-    "notation": "AA j.MP > lc.214K, 623HP",
+    "notation": "AA j.MP > dl.214K, 623HP",
     "startup": 8,
     "drive": 0.0,
     "super": 0,
